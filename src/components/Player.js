@@ -8,12 +8,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function Player({
+  setCurrentSong,
   currentSong,
   isPlaying,
   setIsPlaying,
   audioRef,
   setSongInfo,
   songInfo,
+  songs,
 }) {
   //event handler
   const playHandler = () => {
@@ -29,7 +31,21 @@ function Player({
     audioRef.current.currentTime = e.target.value;
     setSongInfo({ ...songInfo, currentTime: e.target.value });
   };
-  const skipTrackHandler = (directtion) => {};
+  const skipTrackHandler = (direction) => {
+    let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
+    if (direction === "forward") {
+      setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+    }
+    if (direction === "back") {
+      //check if the result is -1 | set the song to the last index in the songs array
+      if((currentIndex - 1) % songs.length === -1){
+        console.log('fromage');
+        setCurrentSong(songs[songs.length - 1])
+        return
+      }
+      setCurrentSong(songs[(currentIndex - 1) % songs.length])
+    }
+  };
   //Format time
   const getTime = (time) => {
     return (
@@ -52,7 +68,7 @@ function Player({
       </div>
       <div className="play-control">
         <FontAwesomeIcon
-          onClick={() => skipTrackHandler('back')}
+          onClick={() => skipTrackHandler("back")}
           className="skik-back"
           size="2x"
           icon={faAngleLeft}
@@ -64,7 +80,7 @@ function Player({
           onClick={playHandler}
         />
         <FontAwesomeIcon
-          onClick={() => skipTrackHandler('forward')}
+          onClick={() => skipTrackHandler("forward")}
           className="skip-forward"
           size="2x"
           icon={faAngleRight}

@@ -27,7 +27,7 @@ function chillhop() {
       cover:
         "https://chillhop.com/wp-content/uploads/2020/07/73c3f09a55221100b520fa131f14e2b09c7f4a81-1024x1024.jpg",
       artist: "Misha",
-      audio: 'https://mp3.chillhop.com/serve.php/?mp3=31498',
+      audio: 'https://mp3.chillhop.com/serve.php/?mp3=8639',
       color: ['#fcc3b0', '#bf6781'],
       id: uuidv4(),
       active: false

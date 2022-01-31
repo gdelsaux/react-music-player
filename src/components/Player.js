@@ -77,19 +77,26 @@ function Player({
       Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
     );
   };
+  // inline style
+  const animTrack = { transform: `translateX(${songInfo.animationPercentage}%)`}
+  const linearGradient = {background: `linear-gradient(to right, ${currentSong.color[0]}, ${currentSong.color[1]} )`}
+
 
   return (
     <div className="player">
       <div className="time-control">
-        <p>{songInfo.currentTime}</p>
-        <input
-          type="range"
-          min={0}
-          max={songInfo.duration || 0}
-          value={songInfo.currentTime}
-          onChange={dragHandler}
-        />
-        <p>{songInfo.duration ? getTime(songInfo.duration) : '   '}</p>
+        <p>{getTime(songInfo.currentTime)}</p>
+        <div style={linearGradient} className="track">
+          <input
+            type="range"
+            min={0}
+            max={songInfo.duration || 0}
+            value={songInfo.currentTime}
+            onChange={dragHandler}
+          />
+          <div style={animTrack} className="animate-track"></div>
+        </div>
+        <p>{songInfo.duration ? getTime(songInfo.duration) : "   "}</p>
       </div>
       <div className="play-control">
         <FontAwesomeIcon

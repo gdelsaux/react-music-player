@@ -7,7 +7,7 @@ import Library from "./components/Library";
 //Style
 import "./styles/app.scss";
 //Util
-import data from "./util";
+import data from './data'
 
 function App() {
   //useRef
@@ -35,14 +35,15 @@ function App() {
       <Nav libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus}/>
       <Song currentSong={currentSong} />
       <Player
+        setCurrentSong={setCurrentSong}
         currentSong={currentSong}
-        isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
-        audioRef={audioRef}
+        isPlaying={isPlaying}
         setSongInfo={setSongInfo}
         songInfo={songInfo}
-        setCurrentSong={setCurrentSong}
+        setSongs={setSongs}
         songs={songs}
+        audioRef={audioRef}
       />
       <Library
         songs={songs}

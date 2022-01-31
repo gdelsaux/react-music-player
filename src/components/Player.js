@@ -1,22 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//Font awsome icons
 import {
   faPlay,
   faAngleLeft,
   faAngleRight,
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
+//import util function
+import { playAudio } from "../utils";
 
 function Player({
   setCurrentSong,
   currentSong,
-  isPlaying,
   setIsPlaying,
+  isPlaying,
   audioRef,
   setSongInfo,
   songInfo,
+  setSongs,
   songs,
 }) {
+  //useEffet
+  useEffect(() => {
+    //toggle active state
+    const newSongs = songs.map((song) => {
+      if (song.id === currentSong.id) {
+        return {
+          ...song,
+          active: true,
+        };
+      } else {
+        return {
+          ...song,
+          active: false,
+        };
+      }
+    });
+    setSongs(newSongs);
+    playAudio(isPlaying, audioRef);
+  }, [currentSong]);
+
   //event handler
   const playHandler = () => {
     if (isPlaying) {
@@ -38,12 +62,13 @@ function Player({
     }
     if (direction === "back") {
       //check if the result is -1 | set the song to the last index in the songs array
-      if((currentIndex - 1) % songs.length === -1){
-        console.log('fromage');
-        setCurrentSong(songs[songs.length - 1])
-        return
+      if ((currentIndex - 1) % songs.length === -1) {
+        console.log("fromage");
+        setCurrentSong(songs[songs.length - 1]);
+        playAudio(isPlaying, audioRef);
+        return;
       }
-      setCurrentSong(songs[(currentIndex - 1) % songs.length])
+      setCurrentSong(songs[(currentIndex - 1) % songs.length]);
     }
   };
   //Format time
@@ -56,7 +81,7 @@ function Player({
   return (
     <div className="player">
       <div className="time-control">
-        <p>{getTime(songInfo.currentTime)}</p>
+        <p>{songInfo.currentTime}</p>
         <input
           type="range"
           min={0}
@@ -64,7 +89,7 @@ function Player({
           value={songInfo.currentTime}
           onChange={dragHandler}
         />
-        <p>{getTime(songInfo.duration)}</p>
+        <p>{songInfo.duration ? getTime(songInfo.duration) : '   '}</p>
       </div>
       <div className="play-control">
         <FontAwesomeIcon

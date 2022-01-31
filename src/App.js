@@ -31,13 +31,23 @@ function App() {
     //calculate time percentage
     const roundedCurrent = Math.round(current);
     const roundedDuration = Math.round(duration);
-    const animation = Math.round((roundedCurrent / roundedDuration) * 100)
+    const animation = Math.round((roundedCurrent / roundedDuration) * 100);
 
-    setSongInfo({ ...songInfo, currentTime: current, duration, animationPercentage: animation });
+    setSongInfo({
+      ...songInfo,
+      currentTime: current,
+      duration,
+      animationPercentage: animation,
+    });
+  };
+  const sonEndEndler = async () => {
+    let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
+    await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+    if (isPlaying) audioRef.current.play();
   };
 
   return (
-    <div className="App">
+    <div className={`App ${libraryStatus ? 'library-active' : ''}`}>
       <Nav libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />
       <Song currentSong={currentSong} />
       <Player
@@ -62,6 +72,7 @@ function App() {
       <audio
         onTimeUpdate={timeHandler}
         onLoadedMetadata={timeHandler}
+        onEnded={sonEndEndler}
         src={currentSong.audio}
         ref={audioRef}
       />

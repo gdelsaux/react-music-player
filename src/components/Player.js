@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //Font awsome icons
 import {
@@ -7,8 +7,6 @@ import {
   faAngleRight,
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
-//import util function
-import { playAudio } from "../utils";
 
 function Player({
   setCurrentSong,
@@ -21,11 +19,9 @@ function Player({
   setSongs,
   songs,
 }) {
-  //useEffet
-  useEffect(() => {
-    //toggle active state
+  const activeLibraryHandler = (prevNext) => {
     const newSongs = songs.map((song) => {
-      if (song.id === currentSong.id) {
+      if (song.id === prevNext.id) {
         return {
           ...song,
           active: true,
@@ -38,8 +34,8 @@ function Player({
       }
     });
     setSongs(newSongs);
-    playAudio(isPlaying, audioRef);
-  }, [currentSong]);
+    if (isPlaying) audioRef.current.play();
+  };
 
   //event handler
   const playHandler = () => {
@@ -55,21 +51,25 @@ function Player({
     audioRef.current.currentTime = e.target.value;
     setSongInfo({ ...songInfo, currentTime: e.target.value });
   };
-  const skipTrackHandler = (direction) => {
+  const skipTrackHandler = async (direction) => {
     let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
     if (direction === "forward") {
-      setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+      await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+      activeLibraryHandler(songs[(currentIndex + 1) % songs.length]);
     }
     if (direction === "back") {
       //check if the result is -1 | set the song to the last index in the songs array
       if ((currentIndex - 1) % songs.length === -1) {
         console.log("fromage");
-        setCurrentSong(songs[songs.length - 1]);
-        playAudio(isPlaying, audioRef);
+        await setCurrentSong(songs[songs.length - 1]);
+        activeLibraryHandler(songs[songs.length - 1]);
+        if (isPlaying) audioRef.current.play();
         return;
       }
-      setCurrentSong(songs[(currentIndex - 1) % songs.length]);
+      await setCurrentSong(songs[(currentIndex - 1) % songs.length]);
+      activeLibraryHandler(songs[(currentIndex - 1) % songs.length]);
     }
+    if (isPlaying) audioRef.current.play();
   };
   //Format time
   const getTime = (time) => {
@@ -78,9 +78,12 @@ function Player({
     );
   };
   // inline style
-  const animTrack = { transform: `translateX(${songInfo.animationPercentage}%)`}
-  const linearGradient = {background: `linear-gradient(to right, ${currentSong.color[0]}, ${currentSong.color[1]} )`}
-
+  const animTrack = {
+    transform: `translateX(${songInfo.animationPercentage}%)`,
+  };
+  const linearGradient = {
+    background: `linear-gradient(to right, ${currentSong.color[0]}, ${currentSong.color[1]} )`,
+  };
 
   return (
     <div className="player">

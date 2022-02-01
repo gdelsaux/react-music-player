@@ -81,9 +81,7 @@ function App() {
       />
       <div className="credential">
         designed and developed by @ G-Dev <br />
-        <a href="www.linkedin.com/in/gaetandelsaux" target={'_blank'}>
-          <FontAwesomeIcon icon={faLinkedin} />
-        </a>
+        <a href="https://www.linkedin.com/in/gaetandelsaux" target={'_blank'}><FontAwesomeIcon icon={faLinkedin} /></a>
       </div>
     </div>
   );

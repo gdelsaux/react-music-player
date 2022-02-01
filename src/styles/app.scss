@@ -13,6 +13,19 @@ body {
 .library-active {
   margin-left: 30%;
 }
+.credential{
+  font-size: 0.8rem;
+  color: rgb(165, 165, 165);
+  padding: 2rem;
+  text-align: center;
+  a{
+    text-decoration: none;
+    color: rgb(165, 165, 165);
+  }
+  svg{
+    font-size: 1.5rem;
+  }
+}
 
 h1 {
   font-size: 1rem;

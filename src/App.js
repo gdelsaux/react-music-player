@@ -1,4 +1,7 @@
 import React, { useState, useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//fontaweson icon
+import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 //Components
 import Nav from "./components/Nav";
 import Song from "./components/Song";
@@ -47,7 +50,7 @@ function App() {
   };
 
   return (
-    <div className={`App ${libraryStatus ? 'library-active' : ''}`}>
+    <div className={`App ${libraryStatus ? "library-active" : ""}`}>
       <Nav libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />
       <Song currentSong={currentSong} />
       <Player
@@ -76,6 +79,12 @@ function App() {
         src={currentSong.audio}
         ref={audioRef}
       />
+      <div className="credential">
+        designed and developed by @ G-Dev <br />
+        <a href="www.linkedin.com/in/gaetandelsaux" target={'_blank'}>
+          <FontAwesomeIcon icon={faLinkedin} />
+        </a>
+      </div>
     </div>
   );
 }

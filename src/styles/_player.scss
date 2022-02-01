@@ -1,5 +1,5 @@
 .player {
-  min-height: 20vh;
+  min-height: 18vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,8 +62,9 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 @media screen and (max-width: 768px) {
-  .player{
-  padding-bottom: 55px;
+  .player {
+    padding-bottom: 30px;
+    padding-top: 30px;
   }
   .time-control {
     width: 90%;

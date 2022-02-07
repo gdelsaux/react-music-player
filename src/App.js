@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //fontaweson icon
-import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { faLinkedin, faGithub, faTwitterSquare } from "@fortawesome/free-brands-svg-icons";
 //Components
 import Nav from "./components/Nav";
 import Song from "./components/Song";
@@ -80,8 +80,12 @@ function App() {
         ref={audioRef}
       />
       <div className="credential">
-        designed and developed by @ G-Dev <br />
+        <p>designed and developed by @G-Dev</p>
+        {/* <p>designed and developed by <a id="portfolio" href="https://g-deve.herokuapp.com/">@G-dev</a></p> */}
+        <br />
         <a href="https://www.linkedin.com/in/gaetandelsaux" target={'_blank'}><FontAwesomeIcon icon={faLinkedin} /></a>
+        <a href="https://github.com/gdelsaux" target={'_blank'}><FontAwesomeIcon icon={faGithub} /></a>
+        <a href="https://twitter.com/delsaux_g" target={'_blank'}><FontAwesomeIcon icon={faTwitterSquare} /></a>
       </div>
     </div>
   );

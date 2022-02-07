@@ -21,6 +21,7 @@ body {
   a{
     text-decoration: none;
     color: rgb(165, 165, 165);
+    padding: 1rem;
   }
   svg{
     font-size: 1.5rem;
@@ -37,6 +38,10 @@ h3,
 h4 {
   color: rgb(100, 100, 100);
   font-weight: 400;
+}
+
+#portfolio{
+  padding: 0rem
 }
 
 @import "./song";
